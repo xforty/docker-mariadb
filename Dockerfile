@@ -30,6 +30,10 @@ RUN sed -i -e 's/^bind-address/#bind-address/' /etc/mysql/my.cnf
 # This should make it friendlier to run on low memory servers.
 RUN sed -i -e 's/^innodb_buffer_pool_size\s*=.*/innodb_buffer_pool_size = 128M/' /etc/mysql/my.cnf
 
+RUN sed -i -e 's/^max_allowed_packet.*/max_allowed_packet = 1073741824/' /etc/mysql/my.cnf
+
+RUN sed -i -e '/\[mysqld\]/ a lower_case_table_names = 1' /etc/mysql/my.cnf
+
 EXPOSE 3306
 ADD scripts /scripts
 RUN chmod +x /scripts/start.sh
